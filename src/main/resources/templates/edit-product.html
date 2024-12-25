@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Редактировать товар</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        .form-title {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .btn-save {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<!-- Шапка сайта -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/products">Магазин тканей</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/products/add">Добавить товар</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/products/histogram">Гистограмма</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">О нас</a>
+                </li>
+            </ul>
+            <form th:action="@{/logout}" method="post" style="display: inline;">
+                <button type="submit" class="btn btn-danger">Выход</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<!-- Форма редактирования товара -->
+<div class="container">
+    <div class="form-container">
+        <h2 class="form-title">Редактировать товар</h2>
+        <form th:action="@{/products/edit/{id}(id=${product.id})}" th:object="${product}" method="post">
+            <div class="mb-3">
+                <label for="id" class="form-label">ID:</label>
+                <input type="text" class="form-control" id="id" th:value="${product.id}" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="productType" class="form-label">Тип товара:</label>
+                <input type="text" class="form-control" th:field="*{productType}" id="productType" placeholder="Введите тип товара" required>
+            </div>
+            <div class="mb-3">
+                <label for="productGroup" class="form-label">Группа товара:</label>
+                <input type="text" class="form-control" th:field="*{productGroup}" id="productGroup" placeholder="Введите группу товара" required>
+            </div>
+            <div class="mb-3">
+                <label for="importDate" class="form-label">Дата ввоза:</label>
+                <input type="date" class="form-control" th:field="*{importDate}" id="importDate" required>
+            </div>
+            <div class="mb-3">
+                <label for="exportDate" class="form-label">Дата вывоза:</label>
+                <input type="date" class="form-control" th:field="*{exportDate}" id="exportDate">
+            </div>
+            <div class="mb-3">
+                <label for="driverName" class="form-label">ФИО водителя:</label>
+                <input type="text" class="form-control" th:field="*{driverName}" id="driverName" placeholder="Введите ФИО водителя" required>
+            </div>
+            <div class="mb-3">
+                <label for="price" class="form-label">Цена:</label>
+                <input type="number" class="form-control" th:field="*{price}" id="price" placeholder="Введите цену товара" step="0.01" min="0" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-save">Обновить</button>
+            <a href="/products" class="btn btn-secondary mt-3">Отмена</a>
+        </form>
+    </div>
+</div>
+
+<!-- Подключение скриптов -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
